@@ -79,10 +79,50 @@ internal class HtmlProgramParser {
 
 public interface ProgramRepo {
 
+    /**
+     * Fetches the VIER homepage and scrapes the `HTML` and `JSON` information found within this page.
+     *
+     * Equivalent of:
+     * ```
+     * curl -X GET "https://www.vier.be/"
+     * ```
+     *
+     * By default it runs on [Dispatchers.IO] and is parallelized to get details for every [Program] on different Coroutines
+     *
+     * This function is quite expensive to run and it advised to be cached.
+     *
+     * @return Either a [Failure] or a [Success.Content.Programs]
+     */
     public suspend fun fetchPrograms(): Either<Failure, Success.Content.Programs>
 
+    /**
+     * Fetch a single [Program] by [SearchHit.Source.SearchKey.Program].
+     *
+     * Equivalent of:
+     * ```
+     * curl -X GET "https://www.vier.be/de-slimste-mens-ter-wereld"
+     * ```
+     *
+     * By default it runs on [Dispatchers.IO]
+     *
+     * @param programSearchKey what program you wish to have more information about.
+     * @return Either a [Failure] or a [Success.Content.SingleProgram]
+     */
     public suspend fun fetchProgram(programSearchKey: SearchHit.Source.SearchKey.Program): Either<Failure, Success.Content.SingleProgram>
 
+    /**
+     * Fetch a single [Success.Content.SingleEpisode] by [SearchHit.Source.SearchKey.Episode].
+     *
+     * Equivalent of:
+     * ```
+     * curl -X GET "https://www.vier.be/de-slimste-mens-ter-wereld"
+     * ```
+     *
+     * By default it runs on [Dispatchers.IO]
+     *
+     * @param episodeSearchKey what episode you want to have more information about
+     * @return Either a [Failure] or a [Success.Content.SingleEpisode]
+     */
     public suspend fun fetchEpisode(episodeSearchKey: SearchHit.Source.SearchKey.Episode): Either<Failure, Success.Content.SingleEpisode>
 
 }
@@ -93,7 +133,6 @@ internal class HttpProgramRepo(
     private val htmlProgramParser: HtmlProgramParser,
 ) : ProgramRepo {
 
-    // curl -X GET "https://www.vier.be/"
     override suspend fun fetchPrograms(): Either<Failure, Success.Content.Programs> =
         withContext(Dispatchers.IO) {
             either {
@@ -110,7 +149,6 @@ internal class HttpProgramRepo(
             }
         }
 
-    // curl -X GET "https://www.vier.be/de-slimste-mens-ter-wereld"
     private suspend fun fetchProgramFromUrl(programUrl: String): Either<Failure, Program> =
         withContext(Dispatchers.IO) {
             client.executeAsync(

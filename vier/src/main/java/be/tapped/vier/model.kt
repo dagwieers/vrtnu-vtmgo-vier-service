@@ -13,6 +13,9 @@ import be.tapped.vier.profile.RefreshToken
 import okhttp3.Request
 import java.util.*
 
+/**
+ * The
+ */
 public sealed class ApiResponse {
     public sealed class Success : ApiResponse() {
         public sealed class Authentication : Success() {

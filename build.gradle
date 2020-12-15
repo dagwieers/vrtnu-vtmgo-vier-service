@@ -9,10 +9,11 @@ buildscript {
 
     dependencies {
         classpath Plugins.kotlinGradle
+        classpath Plugins.dokkaGradle
     }
 }
 
-allprojects {
+allprojects { Project project ->
     repositories {
         google()
         mavenCentral()
@@ -22,11 +23,20 @@ allprojects {
 
     apply plugin: 'java-library'
     apply plugin: 'kotlin'
+    apply plugin: 'org.jetbrains.dokka'
     //apply plugin: 'kotlin-kapt'
 
     java {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    dokkaHtml {
+        dokkaSourceSets {
+            configureEach {
+                includes.from "$rootDir/packages.md"
+            }
+        }
     }
 
     test {

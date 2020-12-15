@@ -19,7 +19,7 @@ public data class Images(
     val teaser: String,
 )
 
-public object CustomHeaderVideoSerializer : KSerializer<HeaderVideo?> {
+private object CustomHeaderVideoSerializer : KSerializer<HeaderVideo?> {
     override val descriptor: SerialDescriptor = buildClassSerialDescriptor("HeaderVideo")
 
     override fun deserialize(decoder: Decoder): HeaderVideo? {
@@ -75,7 +75,7 @@ public object CustomHeaderVideoSerializer : KSerializer<HeaderVideo?> {
 // Unable to delegate to generated KSerializer
 // This object is a copy of HeaderVideo and it's only purpose is to generate a KSerializer for easy mapping.
 @Serializable
-public data class HeaderVideo2(
+private data class HeaderVideo2(
     val autoplay: Boolean,
     val cimTag: String,
     val createdDate: Int,

@@ -31,6 +31,7 @@ object Dependencies {
 
 object Plugins {
     const val kotlinGradle = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}"
+    const val dokkaGradle = "org.jetbrains.dokka:dokka-gradle-plugin:1.4.20"
 }
 
 object Testing {
