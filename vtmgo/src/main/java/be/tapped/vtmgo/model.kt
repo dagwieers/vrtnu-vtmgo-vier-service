@@ -13,7 +13,6 @@ import be.tapped.vtmgo.content.Program
 import be.tapped.vtmgo.content.SearchResultResponse
 import be.tapped.vtmgo.content.StoreFront
 import be.tapped.vtmgo.content.Subtitle
-import be.tapped.vtmgo.content.TargetResponse
 import be.tapped.vtmgo.epg.Epg
 import be.tapped.vtmgo.profile.JWT
 import be.tapped.vtmgo.profile.Profile
@@ -59,7 +58,6 @@ public sealed class ApiResponse {
         }
 
         public sealed class Stream : Failure() {
-            public data class UnsupportedTargetType(val targetType: TargetResponse.Target) : Stream()
             public data class NoStreamFoundForType(val streamType: String) : Stream()
             public object NoJSONFoundInAnvatoJavascriptFunction : Stream()
             public object NoDashStreamFound : Stream()
